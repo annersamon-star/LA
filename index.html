@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorador de Fourier - Análisis Espectral de Señales</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Explorador de Análisis de Fourier</h1>
+            <p class="subtitle">Construye señales complejas combinando armónicos y visualiza su transformada de Fourier en tiempo real. Ajusta la amplitud y fase de cada componente para ver cómo afectan a la señal resultante.</p>
+        </header>
+        
+        <main class="main-content">
+            <section class="visualizations">
+                <section class="graph-section time-signal">
+                    <h2 class="graph-title">Dominio del Tiempo</h2>
+                    <div class="canvas-container">
+                        <canvas id="timeCanvas"></canvas>
+                    </div>
+                </section>
+                
+                <section class="graph-section magnitude-spectrum">
+                    <h2 class="graph-title">Espectro de Magnitud</h2>
+                    <div class="canvas-container">
+                        <canvas id="magnitudeCanvas"></canvas>
+                    </div>
+                </section>
+                
+                <section class="graph-section phase-spectrum">
+                    <h2 class="graph-title">Espectro de Fase</h2>
+                    <div class="canvas-container">
+                        <canvas id="phaseCanvas"></canvas>
+                    </div>
+                </section>
+            </section>
+            
+            <aside class="controls">
+                <div class="control-group">
+                    <h2 class="control-title">Controles de Armónicos <span class="tooltip">ℹ️
+                        <span class="tooltip-text">Un armónico es una componente sinusoidal de una señal periódica cuya frecuencia es un múltiplo entero de la frecuencia fundamental.</span>
+                    </span></h2>
+                    
+                    <!-- Armónico fundamental -->
+                    <div class="harmonic-control">
+                        <label class="harmonic-label">Frecuencia Fundamental <span>(1×f₀)</span></label>
+                        <div class="slider-container">
+                            <label>Amplitud:</label>
+                            <input type="range" id="harmonic1Amp" min="0" max="100" value="100">
+                            <div class="value-display" id="harmonic1AmpValue">100</div>
+                        </div>
+                        <div class="slider-container">
+                            <label>Fase:</label>
+                            <input type="range" id="harmonic1Phase" min="0" max="360" value="0">
+                            <div class="value-display" id="harmonic1PhaseValue">0°</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Segundo armónico -->
+                    <div class="harmonic-control">
+                        <label class="harmonic-label">Segundo Armónico <span>(2×f₀)</span></label>
+                        <div class="slider-container">
+                            <label>Amplitud:</label>
+                            <input type="range" id="harmonic2Amp" min="0" max="100" value="0">
+                            <div class="value-display" id="harmonic2AmpValue">0</div>
+                        </div>
+                        <div class="slider-container">
+                            <label>Fase:</label>
+                            <input type="range" id="harmonic2Phase" min="0" max="360" value="0">
+                            <div class="value-display" id="harmonic2PhaseValue">0°</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tercer armónico -->
+                    <div class="harmonic-control">
+                        <label class="harmonic-label">Tercer Armónico <span>(3×f₀)</span></label>
+                        <div class="slider-container">
+                            <label>Amplitud:</label>
+                            <input type="range" id="harmonic3Amp" min="0" max="100" value="0">
+                            <div class="value-display" id="harmonic3AmpValue">0</div>
+                        </div>
+                        <div class="slider-container">
+                            <label>Fase:</label>
+                            <input type="range" id="harmonic3Phase" min="0" max="360" value="0">
+                            <div class="value-display" id="harmonic3PhaseValue">0°</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cuarto armónico -->
+                    <div class="harmonic-control">
+                        <label class="harmonic-label">Cuarto Armónico <span>(4×f₀)</span></label>
+                        <div class="slider-container">
+                            <label>Amplitud:</label>
+                            <input type="range" id="harmonic4Amp" min="0" max="100" value="0">
+                            <div class="value-display" id="harmonic4AmpValue">0</div>
+                        </div>
+                        <div class="slider-container">
+                            <label>Fase:</label>
+                            <input type="range" id="harmonic4Phase" min="0" max="360" value="0">
+                            <div class="value-display" id="harmonic4PhaseValue">0°</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quinto armónico -->
+                    <div class="harmonic-control">
+                        <label class="harmonic-label">Quinto Armónico <span>(5×f₀)</span></label>
+                        <div class="slider-container">
+                            <label>Amplitud:</label>
+                            <input type="range" id="harmonic5Amp" min="0" max="100" value="0">
+                            <div class="value-display" id="harmonic5AmpValue">0</div>
+                        </div>
+                        <div class="slider-container">
+                            <label>Fase:</label>
+                            <input type="range" id="harmonic5Phase" min="0" max="360" value="0">
+                            <div class="value-display" id="harmonic5PhaseValue">0°</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h2 class="control-title">Configuraciones Preestablecidas</h2>
+                    <div class="presets">
+                        <button class="preset-btn" id="sineWave">Onda Sinusoidal</button>
+                        <button class="preset-btn" id="squareWave">Onda Cuadrada</button>
+                        <button class="preset-btn" id="triangleWave">Onda Triangular</button>
+                        <button class="preset-btn" id="sawtoothWave">Onda Diente de Sierra</button>
+                        <button class="reset-btn" id="resetBtn">Reiniciar</button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+        
+        <div class="info">
+            <h3>¿Qué es la Transformada de Fourier?</h3>
+            <p>La Transformada de Fourier es una herramienta matemática que descompone una señal en sus componentes de frecuencia. En esta aplicación, puedes construir una señal compleja sumando hasta 5 componentes sinusoidales (armónicos) y ver cómo se representa en el dominio del tiempo y en el dominio de la frecuencia (espectro).</p>
+            
+            <h3>Instrucciones de uso:</h3>
+            <ul>
+                <li>Ajusta los controles deslizantes para cambiar la amplitud (0-100) y fase (0-360°) de cada armónico.</li>
+                <li>Observa cómo cambia la señal en tiempo real en las tres visualizaciones.</li>
+                <li>Usa los botones preestablecidos para cargar configuraciones de ondas clásicas.</li>
+                <li>Pasa el cursor sobre el ícono ℹ️ para obtener información sobre los armónicos.</li>
+            </ul>
+            
+            <p><strong>Fórmula de la señal:</strong> s(t) = Σ Aₙ·sin(2π·n·f₀·t + φₙ), donde n=1,2,3,4,5 es el número de armónico, Aₙ es la amplitud y φₙ es la fase.</p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
